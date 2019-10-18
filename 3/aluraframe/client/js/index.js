@@ -2,16 +2,16 @@ var campos = [
     document.querySelector('#data'),
     document.querySelector('#quantidade'),
     document.querySelector('#valor')
-];
+]; console.log(campos);return false;
 var tbody = document.querySelector('table tbody');
 
-document.querySelector('.form').addEventListener('submit', function(event){
+document.querySelector('.form').addEventListener('submit', function(event) {
 
-    event.preventDefault;
+    event.preventDefault();
     
     var tr = document.createElement('tr');
     
-    campos.forEach(function(campo){
+    campos.forEach(function(campo) {
     
         var td = document.createElement('td');
         td.textContent = campo.value;
