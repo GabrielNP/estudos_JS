@@ -1,3 +1,4 @@
+console.log("models/Arquivos.js loaded");
 class Arquivo {
 
     constructor(nome, tamanho, tipo) {

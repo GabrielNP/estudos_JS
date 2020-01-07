@@ -1,3 +1,4 @@
+console.log("helper/ArquivoHelper.js loaded");
 class ArquivoHelper {
 
     static cria(informacao) {
