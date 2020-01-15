@@ -6,8 +6,8 @@ class DateHelper {
     }
     
     static dataParaTexto(data) {
-           
-        return `${data.getFullYear}/${data.getMonth+1}/${data.getDay}`;   
+          
+        return `${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()}`;
     }
 
    static textoParaData(texto) {
@@ -17,7 +17,7 @@ class DateHelper {
     
     return new Date(...texto
             .split('-')
-            .map((item,indice) => item - indice % 2))
+            .map((item, indice) => item - indice % 2));
     }
 
 }
