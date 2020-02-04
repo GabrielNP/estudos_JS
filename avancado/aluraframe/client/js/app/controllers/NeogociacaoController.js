@@ -47,4 +47,11 @@ class NegociacaoController {
         this._inputData.focus();
     }
 
+    remove() {
+        this._listaNegociacoes.remove();
+        this._negociacoesView.update(this._listaNegociacoes);
+        this._mensagem.texto = "Negociações removidas com sucesso";
+        this._mensagemView.update(this._mensagem);
+    }
+
 }
