@@ -12,14 +12,14 @@ class NegociacaoController {
         this._listaNegociacoes =  new Bind(
             new ListaNegociacoes(),
             this._negociacoesView,
-            ['adiciona', 'remove']);
+            'adiciona', 'remove');
             
         this._mensagemView = new MensagemView($('#mensagemView'));
 
         this._mensagem = new Bind(
             new Mensagem(),
             this._mensagemView,
-            ['texto']);
+            'texto');
     }
     
     adiciona(event) {
