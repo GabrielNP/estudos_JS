@@ -10,7 +10,7 @@ class NegociacaoController {
         let self = this;
         this._listaNegociacoes = new Proxy(new ListaNegociacoes(new Date(),1,100), {
 
-            get: function(target, prop, receiver) {
+            get(target, prop, receiver) {
 
                 if(['adiciona','remove'].includes(prop) && typeof(target[prop]) == typeof(Function)) {
 
