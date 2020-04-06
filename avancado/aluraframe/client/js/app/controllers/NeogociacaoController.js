@@ -27,62 +27,21 @@ class NegociacaoController {
     }
 
     importaNegociacao() {
+
         console.log("Importando Negociações...");
-
-        let xhr = new XMLHttpRequest();
-
-        xhr.open('GET', 'negociaco5es/semana');
+        let service = new NegociacaoService();
         
-        xhr.onreadystatechange = () => {
+        service.obterNegociacoes((erro, negociacoes) => {
 
-            /**
-             * Estados da Requisição:
-             *   0: requisição ainda não iniciada
-             *   1: conexão com o servidor estabelecida
-             *   2: requisição recebida
-             *   3: processando requisição
-             *   4: requisição está concluída e a resposta está pronta
-             */
+            // Error first
+            if (erro) {
+                this._mensagem.texto = erro;
+                return;
+            }
 
-            switch (xhr.readyState) {
-
-                case 0: 
-                    console.log("Estado da requisição: ", xhr.readyState, " -> a requisição ainda não foi iniciada.");
-                    break;
-                case 1: 
-                    console.log("Estado da requisição: ", xhr.readyState, " -> conexão com o servidor estabelecida.");
-                    break;
-                case 2: 
-                    console.log("Estado da requisição: ", xhr.readyState, " -> requisição recebida.");
-                    break;
-                case 3: 
-                    console.log("Estado da requisição: ", xhr.readyState, " -> processando requisição.");
-                    break;
-
-                case 4: 
-                    console.log("Estado da requisição: ", xhr.readyState, " -> requisição concluída e a resposta está pronta.");
-
-                    if (xhr.status == 200) {
-
-                        console.log("Obtendo as negociações do servidor...");
-                        JSON.parse(xhr.responseText)
-                            .map((objeto) => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
-                            .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-
-                            this._mensagem.texto = "Negociações importadas com sucesso!";
-
-                    } else {
-
-                        console.log("Nâo foi possível obter as negociações do servidor. Status ", xhr.status);
-                        console.log(xhr.responseText);
-                        this._mensagem.texto = "Não foi possível obter as negocições!";
-                    }
-                    
-                    break;
-            }           
-        }
-
-        xhr.send();
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            this._mensagem.texto = 'Negociações importadas com sucesso!';
+        });
     }
 
     _criarNegociacao() {
