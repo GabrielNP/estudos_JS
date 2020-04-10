@@ -46,7 +46,7 @@ class NegociacaoService {
 
                         console.log("Nâo foi possível obter as negociações do servidor. Status ", xhr.status);
                         console.log(xhr.responseText);
-                        cb('Não foi possível obter as negocições!');
+                        cb('Não foi possível obter as negocições!', null);
                     }
                     
                     break;
