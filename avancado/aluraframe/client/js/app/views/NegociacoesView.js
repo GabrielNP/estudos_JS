@@ -38,7 +38,7 @@ class NegociacoesView extends View {
                             //     model.negociacoes.forEach(n => total+= n.volume);
                             //     return total;
                             // })()
-                            model.negociacoes.reduce((total, n) => total + n.volume, 0.0)}
+                            model.volumeTotal}
                     </td>
                 </tfoot>
             </table>

@@ -26,6 +26,40 @@ class NegociacaoController {
         this._limpaFormulario();
     }
 
+    importaNegociacao() {
+
+        console.log("Importando Negociações...");
+        let service = new NegociacaoService();
+        
+        service.obterNegociacoes((erro, negociacoes) => {
+
+            // Error first
+            if (erro) {
+                this._mensagem.texto = erro;
+                return;
+            }
+
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            this._mensagem.texto = 'Negociações importadas com sucesso!';
+        });
+    }
+
+    sendPost() {
+        event.preventDefault();
+        let post = new NegociacaoService();
+        
+
+        post.enviarDadosParaServidor((erro, sucesso) => {
+            if (erro) {
+                this._mensagem.texto = erro;
+                return;
+            }
+
+            this._mensagem.texto = 'Negociações enviadas com sucesso!';
+            console.log(sucesso);
+        });
+    }
+
     _criarNegociacao() {
 
         return new Negociacao(

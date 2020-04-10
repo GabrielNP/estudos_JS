@@ -15,7 +15,7 @@ class Negociacao {
 
     get data() {
         // Programação defensiva (imutabilidade)
-        return new Date (this._data.getTime());
+        return new Date(this._data.getTime());
     }
 
     get quantidade() {
