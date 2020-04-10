@@ -1,9 +1,5 @@
 class NegociacaoService {
 
-    constructor(negociacao) {
-        this.negociacao = negociacao;
-    }
-
     obterNegociacoes(cb) {
 
         let xhr = new XMLHttpRequest();
