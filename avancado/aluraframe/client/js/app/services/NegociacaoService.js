@@ -1,184 +1,52 @@
 class NegociacaoService {
 
+    constructor() {
+        this._http = new HttpService();
+    }
+
     obterNegociacoesDaSemana() {
 
         return new Promise((resolve, reject) => {
-
-            let xhr = new XMLHttpRequest();
-    
-            xhr.open('GET', 'negociacoes/semana');
-            
-            // executada automaticamente cada vez que há uma alteração no estado da requisição
-            xhr.onreadystatechange = () => {
-    
-                /**
-                 * Estados da Requisição:
-                 *   0: requisição ainda não iniciada
-                 *   1: conexão com o servidor estabelecida
-                 *   2: requisição recebida
-                 *   3: processando requisição
-                 *   4: requisição está concluída e a resposta está pronta
-                 */
-    
-                switch (xhr.readyState) {
-    
-                    case 0: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> a requisição ainda não foi iniciada.");
-                        break;
-                    case 1: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> conexão com o servidor estabelecida.");
-                        break;
-                    case 2: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> requisição recebida.");
-                        break;
-                    case 3: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> processando requisição.");
-                        break;
-    
-                    case 4: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> requisição concluída e a resposta está pronta.");
-    
-                        if (xhr.status == 200) {
-    
-                            console.log("Obtendo as negociações do servidor...");
-                            // console.log("\n\n", JSON.parse(xhr.responseText), "\n\n");
-                            resolve(JSON.parse(xhr.responseText)
-                                .map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
-    
-                        } else {
-    
-                            console.log("Nâo foi possível obter as negociações do servidor. Status ", xhr.status);
-                            console.log(xhr.responseText);
-                            reject('Não foi possível obter as negocições!', null);
-                        }
-                        
-                        break;
-                }           
-            }
-    
-            xhr.send();
+            this._http
+                .get('negociacoes/semana')
+                .then(negociacoes => {
+                    resolve(negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
+                })
+                .catch(erro => {
+                    console.log(erro);
+                    reject('Não foi possível obter as negociações da semana');
+                })
         });
-
     }
 
     obterNegociacoesDaSemanaPassada() {
 
         return new Promise((resolve, reject) => {
 
-            let xhr = new XMLHttpRequest();
-    
-            xhr.open('GET', 'negociacoes/anterior');
-            
-            // executada automaticamente cada vez que há uma alteração no estado da requisição
-            xhr.onreadystatechange = () => {
-    
-                /**
-                 * Estados da Requisição:
-                 *   0: requisição ainda não iniciada
-                 *   1: conexão com o servidor estabelecida
-                 *   2: requisição recebida
-                 *   3: processando requisição
-                 *   4: requisição está concluída e a resposta está pronta
-                 */
-    
-                switch (xhr.readyState) {
-    
-                    case 0: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> a requisição ainda não foi iniciada.");
-                        break;
-                    case 1: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> conexão com o servidor estabelecida.");
-                        break;
-                    case 2: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> requisição recebida.");
-                        break;
-                    case 3: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> processando requisição.");
-                        break;
-    
-                    case 4: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> requisição concluída e a resposta está pronta.");
-    
-                        if (xhr.status == 200) {
-    
-                            console.log("Obtendo as negociações do servidor...");
-                            // console.log("\n\n", JSON.parse(xhr.responseText), "\n\n");
-                            resolve(JSON.parse(xhr.responseText)
-                                .map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
-    
-                        } else {
-    
-                            console.log("Nâo foi possível obter as negociações do servidor. Status ", xhr.status);
-                            console.log(xhr.responseText);
-                            reject('Não foi possível obter as negocições da semana passada!', null);
-                        }
-                        
-                        break;
-                }           
-            }
-    
-            xhr.send();
+            this._http
+                .get('negociacoes/anterior')
+                .then(negociacoes => {
+                    resolve(negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
+                })
+                .catch(erro => {
+                    console.log(erro);
+                    reject('Não foi possível obter as negociações da semana passada');
+                })
         });
-
     }
 
     obterNegociacoesDaSemanaRetrasada() {
 
         return new Promise((resolve, reject) => {
-
-            let xhr = new XMLHttpRequest();
-    
-            xhr.open('GET', 'negociacoes/retrasada');
-            
-            // executada automaticamente cada vez que há uma alteração no estado da requisição
-            xhr.onreadystatechange = () => {
-    
-                /**
-                 * Estados da Requisição:
-                 *   0: requisição ainda não iniciada
-                 *   1: conexão com o servidor estabelecida
-                 *   2: requisição recebida
-                 *   3: processando requisição
-                 *   4: requisição está concluída e a resposta está pronta
-                 */
-    
-                switch (xhr.readyState) {
-    
-                    case 0: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> a requisição ainda não foi iniciada.");
-                        break;
-                    case 1: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> conexão com o servidor estabelecida.");
-                        break;
-                    case 2: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> requisição recebida.");
-                        break;
-                    case 3: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> processando requisição.");
-                        break;
-    
-                    case 4: 
-                        console.log("Estado da requisição: ", xhr.readyState, " -> requisição concluída e a resposta está pronta.");
-    
-                        if (xhr.status == 200) {
-    
-                            console.log("Obtendo as negociações do servidor...");
-                            // console.log("\n\n", JSON.parse(xhr.responseText), "\n\n");
-                            resolve(JSON.parse(xhr.responseText)
-                                .map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
-    
-                        } else {
-    
-                            console.log("Nâo foi possível obter as negociações do servidor. Status ", xhr.status);
-                            console.log(xhr.responseText);
-                            reject('Não foi possível obter as negocições da semana retrasada!', null);
-                        }
-                        
-                        break;
-                }           
-            }
-    
-            xhr.send();
+            this._http
+                .get('negociacoes/retrasada')
+                .then(negociacoes => {
+                    resolve(negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
+                })
+                .catch(erro => {
+                    console.log(erro);
+                    reject('Não foi possível obter as negociações da semana retrasada');
+                })
         });
 
     }
