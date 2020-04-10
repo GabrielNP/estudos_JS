@@ -30,27 +30,19 @@ class NegociacaoController {
 
         console.log("Importando Negociações...");
         let service = new NegociacaoService();
-        
-        service.obterNegociacoesDaSemana()
-            .then(negociacoes => {
-                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao))
-                this._mensagem.texto = 'Negociações da semana importadas com sucesso';                
-            })
-            .catch(erro => this.mensagem.texto = erro);
-        
-        service.obterNegociacoesDaSemanaPassada()
-        .then(negociacoes => {
-            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao))
-            this._mensagem.texto = 'Negociações da semana importadas com sucesso';                
-        })
-        .catch(erro => this.mensagem.texto = erro);
 
-        service.obterNegociacoesDaSemanaRetrasada()
-            .then(negociacoes => {
-                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao))
-                this._mensagem.texto = 'Negociações da semana importadas com sucesso';                
-            })
-            .catch(erro => this.mensagem.texto = erro);
+        Promise.all([
+            service.obterNegociacoesDaSemana(),
+            service.obterNegociacoesDaSemanaPassada(),
+            service.obterNegociacoesDaSemanaRetrasada()
+        ])
+        .then(negociacoes => {
+            negociacoes
+                .reduce((arrayConcatenado, array) => arrayConcatenado.concat(array), [])
+                .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            this._mensagem.texto = 'Negociações importadas com sucesso';
+        })
+        .catch(erro => this._mensagem.texto = erro);
     }
 
     sendPost() {
