@@ -31,11 +31,15 @@
             </div>
             
             <button id="incluir" class="btn btn-primary" type="submit">Incluir</button>
+            
         </form>
     
         <div class="text-center">
             <button onclick="negociacaoController.importaNegociacao()" class="btn btn-primary text-center" type="button">
                 Importar Negociações
+            </button>
+            <button class="btn btn-primary" type="submit" onclick="negociacaoController.sendPost(event)">
+                Enviar dados para servidor
             </button>
             <button onclick="negociacaoController.remove()" class="btn btn-primary text-center" type="button">
                 Apagar

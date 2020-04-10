@@ -44,6 +44,22 @@ class NegociacaoController {
         });
     }
 
+    sendPost() {
+        event.preventDefault();
+        let post = new NegociacaoService();
+        
+
+        post.enviarDadosParaServidor((erro, sucesso) => {
+            if (erro) {
+                this._mensagem.texto = erro;
+                return;
+            }
+
+            this._mensagem.texto = 'Negociações enviadas com sucesso!';
+            console.log(sucesso);
+        });
+    }
+
     _criarNegociacao() {
 
         return new Negociacao(
