@@ -94,7 +94,7 @@ class HttpService {
                             let controller = new NegociacaoController();
                             controller._limpaFormulario();
                             
-                            resolve(JSON.parse(xhr.responseText));
+                            resolve(xhr.responseText);
     
                         } else {
     
