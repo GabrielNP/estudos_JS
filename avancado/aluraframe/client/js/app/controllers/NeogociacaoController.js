@@ -47,18 +47,11 @@ class NegociacaoController {
 
     sendPost() {
         event.preventDefault();
-        let post = new NegociacaoService();
-        
+        let service = new NegociacaoService();        
 
-        post.enviarDadosParaServidor((erro, sucesso) => {
-            if (erro) {
-                this._mensagem.texto = erro;
-                return;
-            }
-
-            this._mensagem.texto = 'Negociações enviadas com sucesso!';
-            console.log(sucesso);
-        });
+        service.enviarDadosParaServidor()
+            .then(this._mensagem.texto = 'Negociações enviadas com sucesso para o servidor.')
+            .catch(erro => this._mensagem.texto = erro);
     }
 
     _criarNegociacao() {

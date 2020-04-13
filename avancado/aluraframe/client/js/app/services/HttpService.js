@@ -58,4 +58,57 @@ class HttpService {
         });
 
     }
+
+    post(url, negociacao) {
+
+        return new Promise((resolve, reject) => {
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);            
+            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        
+            xhr.onreadystatechange = () => {
+    
+                switch (xhr.readyState) {
+    
+                    case 0: 
+                        console.log("Estado da requisição: ", xhr.readyState, " -> a requisição ainda não foi iniciada.");
+                        break;
+                    case 1: 
+                        console.log("Estado da requisição: ", xhr.readyState, " -> conexão com o servidor estabelecida.");
+                        break;
+                    case 2: 
+                        console.log("Estado da requisição: ", xhr.readyState, " -> requisição recebida.");
+                        break;
+                    case 3: 
+                        console.log("Estado da requisição: ", xhr.readyState, " -> processando requisição.");
+                        break;
+    
+                    case 4: 
+                        console.log("Estado da requisição: ", xhr.readyState, " -> requisição concluída e a resposta está pronta.");
+    
+                        if (xhr.status == 200) {
+    
+                            console.log("Enviando as negociações para o servidor.");
+                            
+                            let controller = new NegociacaoController();
+                            controller._limpaFormulario();
+                            
+                            resolve(JSON.parse(xhr.responseText));
+    
+                        } else {
+    
+                            console.log("Nâo foi possível enviar as negociações para o servidor.\nStatus: ", xhr.status);
+                            console.log(xhr.responseText);
+                            reject(xhr.responseText);
+                        }
+    
+                        break;
+                }
+            }
+        
+            xhr.send(JSON.stringify(negociacao));
+    
+        });
+    }
 }
